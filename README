@@ -1,0 +1,37 @@
+
+BACK TO VISUALS
+  a JavaScript demo by <oxy>
+  submitted for the Wild Demo Compo at TLK LAN 2010.4
+
+recommendation
+  the demo is best viewed with chrome or chromium browser. it has also been checked with
+  the following browsers: firefox 4, opera 11. opera works fine but unfortunately firefox
+  is close to unwatchable on linux at least. later on i'll try to figure out the
+  bottlenecks/bugs to make it watchable - after all firefox is an awesome browser which
+  should be able to handle these renderings, i'm guessing the problem is on my side.
+
+credits
+  code by oxy
+  music by Scarzix
+
+third party components 
+
+  music
+    Impuls               Scarzix      http://www.berggreens.dk/c64/c64-sid-music.asp
+    Rolling              Scarzix      http://www.berggreens.dk/c64/c64-sid-music.asp
+
+  graphics
+    Beauty               Annalog85    http://www.sxc.hu/photo/1101935
+    Girl Silhouette      redfloor     http://www.sxc.hu/photo/1060703
+    TLK Logo             Saxén
+
+  fonts
+    Pet Me               Kreativekorp http://www.kreativekorp.com/software/fonts/c64.shtml
+
+  as the license agreement of the graphichs used does not allow me to redistribute, i have
+  decided not to include _any_ of the third party components in this repository.
+
+license
+  the code - excluding all third party components listed above - is released under
+  the MIT License. Third party components are property of the respective creators and
+  license information can be found together with the components

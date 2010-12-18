@@ -1,0 +1,259 @@
+<!--
+
+    BACK TO VISUALS
+      a JavaScript demo by <oxy>
+      submitted for the Wild Demo Compo at TLK LAN 2010.4
+
+--><!doctype html>
+<html dir="ltr">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="description" content="This is a JavaScript demo created for TLK LAN 2010.4. Code by oxy and music by Scarzix. Enjoy!">
+        <title>Back to Visuals, a JavaScript demo created for TLK LAN 2010.4</title>
+        <link rel="stylesheet" href="fonts/stylesheet.css" />
+        <script src="js/demo.core.js"></script>
+        <script src="js/demo.canvas.js"></script>
+        <script src="js/demo.text.js"></script>
+        <script src="js/demo.particle.js"></script>
+        <script src="js/demo.starfield.js"></script>
+        <script src="js/demo.rasterbars.js"></script>
+        <script src="js/demo.mandelbrot.js"></script>
+        <script src="js/demo.plasma.js"></script>
+        <script src="js/demo.tunnel.js"></script>
+        <script src="js/demo.intro.js"></script>
+        <script src="js/demo.credits.js"></script>
+        <script src="js/demo.logo.js"></script>
+        <style>
+            html {font-size:16px; line-height:1;}
+            body {
+                background: #5f50ff;
+                margin: auto;
+                color: #5f50ff;
+                font: 1em/1 PetMe128Medium, 'Courier New', Courier, monospace;
+                text-align: left;
+                overflow: hidden;
+                text-transform: uppercase;
+            }
+
+            canvas {
+                position: absolute;
+                top: 0;
+                visibility: hidden;
+            }
+
+            #loader {
+                position: absolute;
+                background: #1f18af;
+                top: 50%;
+                left: 50%;
+                margin-top: -300px;
+                margin-left: -480px;
+                width: 960px;
+                height: 600px;
+                z-index: -1;
+            }
+
+            #ascii {
+                background: #000;
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                overflow: hidden;
+                font: 10px PetMe128Medium, 'Courier New', Courier, monospace;
+                line-height: 1;
+                color: #fff;
+                visibility: hidden;
+            }
+            
+            h1,h2,h3,h4,h5,h6{font-size:1em;font-weight:normal;margin:1em 0;text-align:center;}
+            h1:before, h1:after{content:' **** '}
+            samp,kbd{font:inherit;display:block;white-space: pre;margin-bottom:1em;}
+            a{font:inherit;color:inherit;text-decoration:none;}
+            kbd {background:none;display:inline;color:inherit;cursor:pointer;}
+
+            .cursor {
+                position: relative;
+                top: -0.15em;
+                left: 0.15em;
+                -webkit-animation-name: blink; /* webkit */
+                -webkit-animation-timing-function: linear;
+                -webkit-animation-iteration-count: infinite;
+                -webkit-animation-duration: 1s;
+                text-decoration: blink; /* opera & firefox */
+            }
+            
+            @-webkit-keyframes blink {
+                0%   { opacity: 1; }
+                49%  { opacity: 1; }
+                50%  { opacity: 0; }
+                100% { opacity: 0; }
+            }
+        </style>
+    </head>
+    <body>
+        <div id="loader">
+            <h1>Back to Visuals 2010</h1>
+            <h2><samp>?FORMULA TOO COMPLEX RAM SYSTEM UNKNOWN BYTES FREE</samp></h2>
+            <p>
+                <samp>READY.
+
+ /========================================================\
+ \\                                                      //
+ // THIS IS A JAVASCRIPT DEMO CREATED FOR TLK LAN 2010.  \\
+ \\                                                      //
+ // THE DEMO REQUIRES A CANVAS API TO RUN AS WELL AS A   \\
+ \\ STATE OF THE ART BROWSER SUCH AS CHROME, OPERA 10+,  //
+ // FIREFOX 4 OR SAFARI 6. THIS IS NOT FULLY OPTIMIZED.  \\
+ \\                                                      //
+ //                                                      \\
+ \\ CODE BY <a href="http://www.oxy.fi" rel="me">OXY</a>                                          //
+ // MUSIC BY <a href="http://www.berggreens.dk/c64/" rel="external">SCARZIX</a>                                     \\
+ \\ GRAPHICS FROM <a href="http://www.sxc.hu/" rel="external">STOCK.XCHANG</a>                           //
+ //                                                      \\
+ \\ INITIALIZE THE RUN COMMAND BY PRESSING [ <kbd id="enter">ENTER</kbd> ]     //
+ //                                                      \\
+ \========================================================/
+
+LOAD"CANVAS",8,1</samp>
+                <samp class="canvas_support"></samp>
+                <samp class="demo"></samp>
+            </p>
+        </div>
+        <canvas id="canvas"></canvas>
+        <pre id="ascii"></pre>
+    <script>
+        (function() {
+
+            window.$ = function ( element, parent ) {
+                parent = parent || window.document;
+                return ( element.charAt(0) === "." ) 
+                        ? parent.getElementsByClassName( element.substr(1) )[0]
+                        : parent.getElementById( element );
+            }
+
+            Demo.init({
+                canvas   : $("canvas"),
+                ascii    : $("ascii"),
+                width    : window.innerWidth,
+                height   : window.innerHeight,
+                delay    : 30
+            });
+
+            if( Demo.canvas_support ) {
+                $(".canvas_support").innerHTML = "SEARCHING FOR CANVAS\n"+
+                        "LOADING\n"+
+                        "READY.\n"+
+                        "LOAD\"*\",8,8";
+                $(".demo").innerHTML = "SEARCHING FOR *\n"+
+                        "LOADING\n"+
+                        "READY.\n"+
+                        "RUN<span class=\"cursor\">&#9609;</span>";
+            } else {
+                $(".canvas_support").innerHTML = "SEARCHING FOR CANVAS\n"+
+                        "DEVICE NOT PRESENT\n"+
+                        "CAN'T CONTINUE.<span class=\"cursor\">&#9609;</span>";
+                return;
+            }
+
+            Demo.setupAudio([
+                new Audio("audio/impuls.ogg"),
+                new Audio("audio/rolling.ogg")
+            ]);
+
+            Demo.setupScenes([{
+                effect     : new Intro,
+                duration   : 19500,
+                transition : {
+                    effect   : "fadeTo",
+                    color    : "255,255,255",
+                    duration : 1000
+                },
+                onDraw : function() {
+                    $("canvas").style.visibility = "visible";
+                },
+                onComplete : function() {
+                },
+                onSetup : function() {
+                    
+                }
+            }, {
+                effect     : new Rasterbars,
+                duration   : 24000,
+                transition : {
+                    effect   : "fadeTo",
+                    color    : "0,0,0",
+                    duration : 1000
+                }
+            }, {
+                effect     : new Mandelbrot,
+                duration   : 15000,
+                onDraw : function() {
+                    $("canvas").style.visibility = "hidden";
+                    $("ascii").style.visibility = "visible";
+                },
+                onComplete : function() {
+                    $("canvas").style.visibility = "visible";
+                    $("ascii").style.visibility = "hidden";
+                }
+            }, {
+                effect     : new Starfield,
+                duration   : 30000,
+                transition : {
+                    effect   : "fadeTo",
+                    color    : "0,127,127",
+                    duration : 2000
+                }
+            }, {
+                effect     : new Plasma,
+                duration   : 30000
+            }, {
+                effect     : new Tunnel,
+                duration   : 29000,
+                transition : {
+                    effect   : "fadeTo",
+                    color    : "0,0,0",
+                    duration : 5000
+                }
+            }, {
+                effect     : new Logo,
+                duration   : 34000
+            }, {
+                effect     : new Credits,
+                duration   : 50000
+            }]);
+
+        })();
+    </script>
+    <script>
+        var _gaq = [['_setAccount', 'UA-6980403-3'], ['_trackPageview']];
+        (function(d, t) {
+            var g = d.createElement(t),
+                    s = d.getElementsByTagName(t)[0];
+            g.async = true;
+            g.src = ('https:' == location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            s.parentNode.insertBefore(g, s);
+        })(document, 'script');
+    </script>
+    </body>
+</html>
+<!--
+
+    credits
+      code by oxy
+      music by Scarzix
+
+    third party components
+
+      music
+        Impuls               Scarzix      http://www.berggreens.dk/c64/c64-sid-music.asp
+        Rolling              Scarzix      http://www.berggreens.dk/c64/c64-sid-music.asp
+
+      graphics
+        Beauty               Annalog85    http://www.sxc.hu/photo/1101935
+        Girl Silhouette      redfloor     http://www.sxc.hu/photo/1060703
+
+      fonts
+        Pet Me               Kreativekorp http://www.kreativekorp.com/software/fonts/c64.shtml
+
+-->
