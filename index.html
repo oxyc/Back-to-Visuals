@@ -103,7 +103,7 @@
  // THIS IS A JAVASCRIPT DEMO CREATED FOR TLK LAN 2010.  \\
  \\                                                      //
  // THE DEMO REQUIRES A CANVAS API TO RUN AS WELL AS A   \\
- \\ STATE OF THE ART BROWSER SUCH AS CHROME, OPERA 10+,  //
+ \\ STATE OF THE ART BROWSER SUCH AS CHROME, OPERA 11,  //
  // FIREFOX 4 OR SAFARI 6. THIS IS NOT FULLY OPTIMIZED.  \\
  \\                                                      //
  //                                                      \\
@@ -140,7 +140,7 @@ LOAD"CANVAS",8,1</samp>
                 delay    : 30
             });
 
-            if( Demo.canvas_support ) {
+            if ( Demo.canvas_support ) {
                 $(".canvas_support").innerHTML = "SEARCHING FOR CANVAS\n"+
                         "LOADING\n"+
                         "READY.\n"+
@@ -169,12 +169,12 @@ LOAD"CANVAS",8,1</samp>
                     color    : "255,255,255",
                     duration : 1000
                 },
-                onDraw : function() {
+                onDraw : function () {
                     $("canvas").style.visibility = "visible";
                 },
-                onComplete : function() {
+                onComplete : function () {
                 },
-                onSetup : function() {
+                onSetup : function () {
                     
                 }
             }, {
@@ -188,11 +188,11 @@ LOAD"CANVAS",8,1</samp>
             }, {
                 effect     : new Mandelbrot,
                 duration   : 15000,
-                onDraw : function() {
+                onDraw : function () {
                     $("canvas").style.visibility = "hidden";
                     $("ascii").style.visibility = "visible";
                 },
-                onComplete : function() {
+                onComplete : function () {
                     $("canvas").style.visibility = "visible";
                     $("ascii").style.visibility = "hidden";
                 }
