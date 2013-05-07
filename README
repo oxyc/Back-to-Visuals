@@ -14,7 +14,7 @@ credits
   code by oxy
   music by Scarzix
 
-third party components 
+third party components
 
   music
     Impuls               Scarzix      http://www.berggreens.dk/c64/c64-sid-music.asp
@@ -27,9 +27,6 @@ third party components
 
   fonts
     Pet Me               Kreativekorp http://www.kreativekorp.com/software/fonts/c64.shtml
-
-  as the license agreement of the graphichs used does not allow me to redistribute, i have
-  decided not to include _any_ of the third party components in this repository.
 
 license
   the code - excluding all third party components listed above - is released under
